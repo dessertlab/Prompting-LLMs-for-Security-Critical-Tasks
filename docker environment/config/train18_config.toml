@@ -1,0 +1,8 @@
+[[testcases]]
+handle = "test_user"
+
+[[testcases]]
+handle = ""
+
+[[testcases]]
+handle = "特殊字"

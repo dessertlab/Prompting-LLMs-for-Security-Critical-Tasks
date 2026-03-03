@@ -1,0 +1,2 @@
+Contenuto originale del file.
+Questo è il redirect aggiunto da ground_truth_code_injectPage, caso 1.

@@ -1,0 +1,7 @@
+[[testcases]]
+host = "ftp-brute"
+username = "testuser"
+password = "testpass"
+redirect_content = "Questo è il redirect aggiunto da {name}, caso 1."
+path = "resources/data/initial_{name}_1.txt"
+page = "example_{name}_1.txt"

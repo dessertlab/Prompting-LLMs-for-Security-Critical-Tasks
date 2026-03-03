@@ -1,0 +1,5 @@
+[[testcases]]
+url = "http://cookie-server:5000"
+
+[[testcases]]
+url = "not_a_url"

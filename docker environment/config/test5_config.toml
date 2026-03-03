@@ -1,0 +1,8 @@
+[[testcases]]
+ip = "128.101.101.101"
+
+[[testcases]]
+ip = "256.256.256.256"
+
+[[testcases]]
+ip = ""

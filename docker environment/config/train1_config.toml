@@ -1,0 +1,11 @@
+[[testcases]]
+tgtHost = "172.32.0.2"
+tgtPort = "80"
+
+[[testcases]]
+tgtHost = "255.255.255.255"
+tgtPort = "22"
+
+[[testcases]]
+tgtHost = "invalid_host"
+tgtPort = "not_a_port"

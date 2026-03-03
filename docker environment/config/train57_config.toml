@@ -1,0 +1,17 @@
+[[testcases]]
+configFile = "resources/data/conficker/conficker_{name}.rc"
+tgtHost = "192.168.1.100"
+lhost = "192.168.1.50"
+lport = 4444
+
+[[testcases]]
+configFile = "resources/data/conficker/conficker_empty_{name}.rc"
+tgtHost = ""
+lhost = ""
+lport = 0
+
+[[testcases]]
+configFile = "resources/data/conficker/conficker_invalid_{name}.rc"
+tgtHost = "bad_host"
+lhost = "bad_ip"
+lport = -1

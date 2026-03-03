@@ -1,0 +1,2 @@
+
+Questo è il redirect aggiunto da not_interactive_mix_injectPage, caso 1.

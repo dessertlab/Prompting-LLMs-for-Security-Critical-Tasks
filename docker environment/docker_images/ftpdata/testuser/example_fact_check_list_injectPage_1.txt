@@ -1,0 +1,2 @@
+
+Questo è il redirect aggiunto da fact_check_list_injectPage, caso 1.

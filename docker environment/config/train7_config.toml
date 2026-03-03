@@ -1,0 +1,14 @@
+[[testcases]]
+host = "ssh-test"
+user = "testuser"
+password = "testpass"
+
+[[testcases]]
+host = "localhost"
+user = "test"
+password = ""
+
+[[testcases]]
+host = ""
+user = ""
+password = 12345

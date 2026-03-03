@@ -1,0 +1,951 @@
+version: "3.9"
+
+x-common-config: &common-config
+    user: "${MYUID}:${MYGID}"
+    build:
+      context: .
+      dockerfile: Dockerfile_sandbox
+    working_dir: /app
+    environment:
+        - TEST_PARAM=${TEST_PARAM:-default}
+        - COVERAGE_ID=${COVERAGE_ID:-default}
+    command: >
+        bash -c "
+            mkdir -p /app/output && 
+            mkdir -p /app/coverage_data &&
+            coverage run --data-file=/app/coverage_data/.coverage.${COVERAGE_ID} -m utils.execute_all_cases &&
+            coverage html --data-file=/app/coverage_data/.coverage.${COVERAGE_ID} -d /app/coverage_data/html_${COVERAGE_ID} &&
+            coverage report --data-file=/app/coverage_data/.coverage.${COVERAGE_ID} > /app/coverage_data/report_${COVERAGE_ID}.txt
+        "
+        
+services:  
+    dev1:
+        <<: *common-config
+        container_name: sandbox_dev1
+        image: sandbox_dev1
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev1.py:/app/functions/dev1.py:ro
+            - ./config/dev1_config.toml:/app/config/dev1_config.toml
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+            
+    
+    dev2:
+        <<: *common-config
+        container_name: sandbox_dev2
+        image: sandbox_dev2
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev2.py:/app/functions/dev2.py:ro
+            - ./config/dev2_config.toml:/app/config/dev2_config.toml:ro
+            - ./resources/database/skype:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    dev3:
+        <<: *common-config
+        container_name: sandbox_dev3
+        image: sandbox_dev3
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev3.py:/app/functions/dev3.py:ro
+            - ./config/dev3_config.toml:/app/config/dev3_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    dev4:
+        <<: *common-config
+        container_name: sandbox_dev4
+        image: sandbox_dev4
+        networks:
+            - proxy_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev4.py:/app/functions/dev4.py:ro
+            - ./config/dev4_config.toml:/app/config/dev4_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    dev5:
+        <<: *common-config
+        container_name: sandbox_dev5
+        image: sandbox_dev5
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev5.py:/app/functions/dev5.py:ro
+            - ./config/dev5_config.toml:/app/config/dev5_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data    
+    
+    dev6:
+        <<: *common-config
+        container_name: sandbox_dev6
+        image: sandbox_dev6
+        user: "0:0"
+        networks:
+            - udp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev6.py:/app/functions/dev6.py:ro
+            - ./config/dev6_config.toml:/app/config/dev6_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+    
+    dev7:
+        <<: *common-config
+        container_name: sandbox_dev7
+        image: sandbox_dev7
+        networks:
+            - bot_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/dev7.py:/app/functions/dev7.py:ro
+            - ./config/dev7_config.toml:/app/config/dev7_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+    
+    test1:
+        <<: *common-config
+        container_name: sandbox_test1
+        image: sandbox_test1
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test1.py:/app/functions/test1.py:ro
+            - ./config/test1_config.toml:/app/config/test1_config.toml:ro
+            - ./resources/database/skype:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    test2:
+        <<: *common-config
+        container_name: sandbox_test2
+        image: sandbox_test2
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test2.py:/app/functions/test2.py:ro
+            - ./config/test2_config.toml:/app/config/test2_config.toml:ro
+            - ./resources/database/skype:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    test3:
+        <<: *common-config
+        container_name: sandbox_test3
+        image: sandbox_test3
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test3.py:/app/functions/test3.py:ro
+            - ./config/test3_config.toml:/app/config/test3_config.toml:ro
+            - ./resources/pcap:/app/resources/pcap:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    test4:
+        <<: *common-config
+        container_name: sandbox_test4
+        image: sandbox_test4
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test4.py:/app/functions/test4.py:ro
+            - ./config/test4_config.toml:/app/config/test4_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    test5:
+        <<: *common-config
+        container_name: sandbox_test5
+        image: sandbox_test5
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test5.py:/app/functions/test5.py:ro
+            - ./config/test5_config.toml:/app/config/test5_config.toml:ro
+            - ./resources/GeoIPCity.dat:/app/resources/GeoIPCity.dat:ro
+            - ./resources/GeoLite2-City.mmdb:/app/resources/GeoLite2-City.mmdb:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    test6:
+        <<: *common-config
+        container_name: sandbox_test6
+        image: sandbox_test6
+        user: "0:0"
+        networks:
+            - ftp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test6.py:/app/functions/test6.py:ro
+            - ./config/test6_config.toml:/app/config/test6_config.toml:ro
+            - ${DATA_DIR:-./resources/data_og}:/app/resources/data
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    test7:
+        <<: *common-config
+        container_name: sandbox_test7
+        image: sandbox_test7
+        user: "0:0"
+        networks:
+            - webserver_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/test7.py:/app/functions/test7.py:ro
+            - ./config/test7_config.toml:/app/config/test7_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train1:
+        <<: *common-config
+        container_name: sandbox_train1
+        image: sandbox_train1
+        networks:
+            - webserver_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train1.py:/app/functions/train1.py:ro
+            - ./config/train1_config.toml:/app/config/train1_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train2:
+        <<: *common-config
+        container_name: sandbox_train2
+        image: sandbox_train2
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train2.py:/app/functions/train2.py:ro
+            - ./config/train2_config.toml:/app/config/train2_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train3:
+        <<: *common-config
+        container_name: sandbox_train3
+        image: sandbox_train3
+        networks:
+            - webserver_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train3.py:/app/functions/train3.py:ro
+            - ./config/train3_config.toml:/app/config/train3_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data      
+    
+    train4:
+        <<: *common-config
+        container_name: sandbox_train4
+        user: "0:0"
+        image: sandbox_train4
+        networks:
+            - smb_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train4.py:/app/functions/train4.py:ro
+            - ./config/train4_config.toml:/app/config/train4_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+  
+    train5:
+        <<: *common-config
+        container_name: sandbox_train5
+        image: sandbox_train5
+        networks:
+            - webserver_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train5.py:/app/functions/train5.py:ro
+            - ./config/train5_config.toml:/app/config/train5_config.toml:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data   
+
+    train6:
+        <<: *common-config
+        container_name: sandbox_train6
+        image: sandbox_train6
+        networks:
+            - flask_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train6.py:/app/functions/train6.py:ro
+            - ./config/train6_config.toml:/app/config/train6_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train7:
+        <<: *common-config
+        container_name: sandbox_train7
+        image: sandbox_train7
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train7.py:/app/functions/train7.py:ro
+            - ./config/train7_config.toml:/app/config/train7_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train8:
+        <<: *common-config
+        container_name: sandbox_train8
+        image: sandbox_train8
+        networks:
+            - flask_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train8.py:/app/functions/train8.py:ro
+            - ./config/train8_config.toml:/app/config/train8_config.toml:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data  
+
+    train9:
+        <<: *common-config
+        container_name: sandbox_train9
+        image: sandbox_train9
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train9.py:/app/functions/train9.py:ro
+            - ./config/train9_config.toml:/app/config/train9_config.toml:ro
+            - ./resources/database/places:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train10:
+        <<: *common-config
+        container_name: sandbox_train10
+        image: sandbox_train10
+        user: "0:0"
+        networks:
+            - udp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train10.py:/app/functions/train10.py:ro
+            - ./config/train10_config.toml:/app/config/train10_config.toml:ro
+            - ./resources/data/train10:/app/resources/data
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train11:
+        <<: *common-config
+        container_name: sandbox_train11
+        image: sandbox_train11
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train11.py:/app/functions/train11.py:ro
+            - ./config/train11_config.toml:/app/config/train11_config.toml:ro
+            - ./resources/pcap:/app/resources/pcap:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train12:
+        <<: *common-config
+        container_name: sandbox_train12
+        image: sandbox_train12
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train12.py:/app/functions/train12.py:ro
+            - ./config/train12_config.toml:/app/config/train12_config.toml:ro
+            - ./resources/database/cookies:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train13:
+        <<: *common-config
+        container_name: sandbox_train13
+        image: sandbox_train13
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train13.py:/app/functions/train13.py:ro
+            - ./config/train13_config.toml:/app/config/train13_config.toml:ro
+            - ./resources/.env:/app/resources/.env:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train14:
+        <<: *common-config
+        container_name: sandbox_train14
+        image: sandbox_train14
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train14.py:/app/functions/train14.py:ro
+            - ./config/train14_config.toml:/app/config/train14_config.toml:ro            
+            - ./resources/.env:/app/resources/.env:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train15:
+        <<: *common-config
+        container_name: sandbox_train15
+        image: sandbox_train15
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train15.py:/app/functions/train15.py:ro
+            - ./config/train15_config.toml:/app/config/train15_config.toml:ro
+            - ./resources/.env:/app/resources/.env:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train16:
+        <<: *common-config
+        container_name: sandbox_train16
+        image: sandbox_train16
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train16.py:/app/functions/train16.py:ro
+            - ./config/train16_config.toml:/app/config/train16_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train17:
+        <<: *common-config
+        container_name: sandbox_train17
+        image: sandbox_train17
+        networks:
+            - twitter_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train17.py:/app/functions/train17.py:ro
+            - ./config/train17_config.toml:/app/config/train17_config.toml:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data 
+
+    train18:
+        <<: *common-config
+        container_name: sandbox_train18
+        image: sandbox_train18
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train18.py:/app/functions/train18.py:ro
+            - ./config/train18_config.toml:/app/config/train18_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train19:
+        <<: *common-config
+        container_name: sandbox_train19
+        image: sandbox_train19
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train19.py:/app/functions/train19.py:ro
+            - ./config/train19_config.toml:/app/config/train19_config.toml:ro
+            - ./resources/files:/app/resources/files:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train20:
+        <<: *common-config
+        container_name: sandbox_train20
+        image: sandbox_train20
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train20.py:/app/functions/train20.py:ro
+            - ./config/train20_config.toml:/app/config/train20_config.toml:ro            
+            - ./resources/files:/app/resources/files:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train21:
+        <<: *common-config
+        container_name: sandbox_train21
+        image: sandbox_train21
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train21.py:/app/functions/train21.py:ro
+            - ./config/train21_config.toml:/app/config/train21_config.toml:ro
+            - ./resources/files:/app/resources/files:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+            
+    train22:
+        <<: *common-config
+        container_name: sandbox_train22
+        image: sandbox_train22
+        networks:
+            - twitter_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train22.py:/app/functions/train22.py:ro
+            - ./config/train22_config.toml:/app/config/train22_config.toml:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data 
+
+    train23:
+        <<: *common-config
+        container_name: sandbox_train23
+        image: sandbox_train23
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train23.py:/app/functions/train23.py:ro
+            - ./config/train23_config.toml:/app/config/train23_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train24:
+        <<: *common-config
+        container_name: sandbox_train24
+        image: sandbox_train24
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train24.py:/app/functions/train24.py:ro
+            - ./config/train24_config.toml:/app/config/train24_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train25:
+        <<: *common-config
+        container_name: sandbox_train25
+        image: sandbox_train25
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train25.py:/app/functions/train25.py:ro
+            - ./config/train25_config.toml:/app/config/train25_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train26:
+        <<: *common-config
+        container_name: sandbox_train26
+        image: sandbox_train26
+        networks:
+            - twitter_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train26.py:/app/functions/train26.py:ro
+            - ./config/train26_config.toml:/app/config/train26_config.toml:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data  
+
+    train27:
+        <<: *common-config
+        container_name: sandbox_train27
+        image: sandbox_train27
+        networks:
+            - mail_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train27.py:/app/functions/train27.py:ro
+            - ./config/train27_config.toml:/app/config/train27_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data   
+
+    train28:
+        <<: *common-config
+        container_name: sandbox_train28
+        image: sandbox_train28
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train28.py:/app/functions/train28.py:ro
+            - ./config/train28_config.toml:/app/config/train28_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train29:
+        <<: *common-config
+        container_name: sandbox_train29
+        image: sandbox_train29
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train29.py:/app/functions/train29.py:ro
+            - ./config/train29_config.toml:/app/config/train29_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train30:
+        <<: *common-config
+        container_name: sandbox_train30
+        image: sandbox_train30
+        user: "0:0"
+        networks:
+            - udp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train30.py:/app/functions/train30.py:ro
+            - ./config/train30_config.toml:/app/config/train30_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train31:
+        <<: *common-config
+        container_name: sandbox_train31
+        image: sandbox_train31
+        user: "0:0"
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train31.py:/app/functions/train31.py:ro
+            - ./config/train31_config.toml:/app/config/train31_config.toml:ro
+            - ./resources/files:/app/resources/files:ro
+            - ${DATA_DIR:-./resources/data_og}:/app/resources/data
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data   
+
+    train32:
+        <<: *common-config
+        container_name: sandbox_train32
+        image: sandbox_train32
+        user: "0:0"
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train32.py:/app/functions/train32.py:ro
+            - ./config/train32_config.toml:/app/config/train32_config.toml:ro
+            - ${DATA_DIR:-./resources/data_og}:/app/resources/data
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train33:
+        <<: *common-config
+        container_name: sandbox_train33
+        image: sandbox_train33
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train33.py:/app/functions/train33.py:ro
+            - ./config/train33_config.toml:/app/config/train33_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train34:
+        <<: *common-config
+        container_name: sandbox_train34
+        image: sandbox_train34
+        user: "0:0"
+        networks:
+            - udp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train34.py:/app/functions/train34.py:ro
+            - ./config/train34_config.toml:/app/config/train34_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train35:
+        <<: *common-config
+        container_name: sandbox_train35
+        image: sandbox_train35
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train35.py:/app/functions/train35.py:ro
+            - ./config/train35_config.toml:/app/config/train35_config.toml:ro
+            - ./resources/database/download:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train36:
+        <<: *common-config
+        container_name: sandbox_train36
+        image: sandbox_train36
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train36.py:/app/functions/train36.py:ro
+            - ./config/train36_config.toml:/app/config/train36_config.toml:ro            
+            - ./resources/img:/app/resources/img:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+            
+    train37:
+        <<: *common-config
+        container_name: sandbox_train37
+        image: sandbox_train37
+        networks:
+            - ftp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train37.py:/app/functions/train37.py:ro
+            - ./config/train37_config.toml:/app/config/train37_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data 
+
+    train38:
+        <<: *common-config
+        container_name: sandbox_train38
+        image: sandbox_train38
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train38.py:/app/functions/train38.py:ro
+            - ./config/train38_config.toml:/app/config/train38_config.toml:ro
+            - ./resources/database/iphone:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train39:
+        <<: *common-config
+        container_name: sandbox_train39
+        image: sandbox_train39
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train39.py:/app/functions/train39.py:ro
+            - ./config/train39_config.toml:/app/config/train39_config.toml:ro
+            - ./resources/pcap:/app/resources/pcap:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train41:
+        <<: *common-config
+        container_name: sandbox_train41
+        image: sandbox_train41
+        user: "0:0"
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train41.py:/app/functions/train41.py:ro
+            - ./config/train41_config.toml:/app/config/train41_config.toml:ro
+            - ${VP_DIR:-./VP-Dataset_og}/anonBrowser.py:/app/functions/anonBrowser.py:ro
+            - ${DATA_DIR:-./resources/data_og}:/app/resources/data
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train42:
+        <<: *common-config
+        container_name: sandbox_train42
+        image: sandbox_train42
+        networks:
+            - ftp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train42.py:/app/functions/train42.py:ro
+            - ./config/train42_config.toml:/app/config/train42_config.toml:ro
+            - ./resources/files:/app/resources/files:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train43:
+        <<: *common-config
+        container_name: sandbox_train43
+        image: sandbox_train43
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train43.py:/app/functions/train43.py:ro
+            - ./config/train43_config.toml:/app/config/train43_config.toml:ro
+            - ./resources/GeoIPCity.dat:/app/resources/GeoIPCity.dat:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train44:
+        <<: *common-config
+        container_name: sandbox_train44
+        image: sandbox_train44
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train44.py:/app/functions/train44.py:ro
+            - ./config/train44_config.toml:/app/config/train44_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ./known_hosts:/root/.ssh/known_hosts:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train45:
+        <<: *common-config
+        container_name: sandbox_train45
+        image: sandbox_train45
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train45.py:/app/functions/train45.py:ro
+            - ./config/train45_config.toml:/app/config/train45_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data    
+
+    train46:
+        <<: *common-config
+        container_name: sandbox_train46
+        image: sandbox_train46
+        user: "0:0"
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train46.py:/app/functions/train46.py:ro
+            - ./config/train46_config.toml:/app/config/train46_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${DATA_DIR:-./resources/data_og}/train46:/app
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train47:
+        <<: *common-config
+        container_name: sandbox_train47
+        image: sandbox_train47
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train47.py:/app/functions/train47.py:ro
+            - ./config/train47_config.toml:/app/config/train47_config.toml:ro
+            - ./resources/database/places:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train48:
+        <<: *common-config
+        container_name: sandbox_train48
+        image: sandbox_train48
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train48.py:/app/functions/train48.py:ro
+            - ./config/train48_config.toml:/app/config/train48_config.toml:ro
+            - ./resources/database/skype:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train49:
+        <<: *common-config
+        container_name: sandbox_train49
+        image: sandbox_train49
+        user: "0:0"
+        networks:
+            - ftp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train49.py:/app/functions/train49.py:ro
+            - ./config/train49_config.toml:/app/config/train49_config.toml:ro
+            - ./utils:/app/utils:ro
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data   
+    
+    train50:
+        <<: *common-config
+        container_name: sandbox_train50
+        image: sandbox_train50
+        networks:
+            - tcp_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train50.py:/app/functions/train50.py:ro
+            - ./config/train50_config.toml:/app/config/train50_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+    
+    train51:
+        <<: *common-config
+        container_name: sandbox_train51
+        image: sandbox_train51
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train51.py:/app/functions/train51.py:ro
+            - ./config/train51_config.toml:/app/config/train51_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+    
+    train52:
+        <<: *common-config
+        container_name: sandbox_train52
+        image: sandbox_train52
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train52.py:/app/functions/train52.py:ro
+            - ./config/train52_config.toml:/app/config/train52_config.toml:ro
+            - ./resources/database/msg:/app/resources/database:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train53:
+        <<: *common-config
+        container_name: sandbox_train53
+        image: sandbox_train53
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train53.py:/app/functions/train53.py:ro
+            - ./config/train53_config.toml:/app/config/train53_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train54:
+        <<: *common-config
+        container_name: sandbox_train54
+        image: sandbox_train54
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train54.py:/app/functions/train54.py:ro
+            - ./config/train54_config.toml:/app/config/train54_config.toml:ro
+            - ./resources/pcap:/app/resources/pcap:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train55:
+        <<: *common-config
+        container_name: sandbox_train55
+        image: sandbox_train55
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train55.py:/app/functions/train55.py:ro
+            - ./config/train55_config.toml:/app/config/train55_config.toml:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train56:
+        <<: *common-config
+        container_name: sandbox_train56
+        image: sandbox_train56
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train56.py:/app/functions/train56.py:ro
+            - ./config/train56_config.toml:/app/config/train56_config.toml:ro
+            - ./resources/GeoIPCity.dat:/app/resources/GeoIPCity.dat:ro
+            - ./resources/GeoLite2-City.mmdb:/app/resources/GeoLite2-City.mmdb:ro
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train57:
+        <<: *common-config
+        container_name: sandbox_train57
+        image: sandbox_train57
+        user: "0:0"
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train57.py:/app/functions/train57.py:ro
+            - ./config/train57_config.toml:/app/config/train57_config.toml:ro
+            - ${DATA_DIR:-./resources/data_og}:/app/resources/data
+            - ./utils:/app/utils:ro
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+    train58:
+        <<: *common-config
+        container_name: sandbox_train58
+        image: sandbox_train58
+        user: "0:0"
+        networks:
+            - ssh_net
+        volumes:
+            - ${VP_DIR:-./VP-Dataset_og}/train58.py:/app/functions/train58.py:ro
+            - ./config/train58_config.toml:/app/config/train58_config.toml:ro
+            - ./utils:/app/utils:ro
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ${OUTPUT_DIR:-./output_og}:/app/output
+            - ${COVERAGE_DIR:-./coverage_og}:/app/coverage_data
+
+networks:
+    proxy_net:
+        external: true
+    bot_net:
+        external: true
+    ftp_net:
+        external: true
+    webserver_net:
+        external: true
+    flask_net:
+        external: true
+    mail_net:
+        external: true
+    twitter_net:
+        external: true
+    smb_net:
+        external: true 
+    tcp_net:
+        external: true             
+    udp_net:
+        external: true
+    ssh_net:
+        external: true

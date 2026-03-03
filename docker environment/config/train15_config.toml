@@ -1,0 +1,5 @@
+[[testcases]]
+search_term = "test"
+
+[[testcases]]
+search_term = ""

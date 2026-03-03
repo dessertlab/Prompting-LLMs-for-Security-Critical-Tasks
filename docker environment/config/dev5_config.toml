@@ -1,0 +1,26 @@
+[[testcases]]
+src = "8.8.8.8"
+dst = "192.168.1.100"
+sport = 53
+dport = 12345
+rcode = 3
+qname = "nonexistent.example.com"
+rdata = "0.0.0.0"
+
+[[testcases]]
+src = "8.8.8.8"
+dst = "192.168.1.102"
+sport = 53
+dport = 65535
+rcode = 0
+qname = ""
+rdata = "0.0.0.0"
+
+[[testcases]]
+src = "not_an_ip"
+dst = "invalid_dst"
+sport = -1
+dport = -53
+rcode = 999
+qname = 12345
+rdata = ""

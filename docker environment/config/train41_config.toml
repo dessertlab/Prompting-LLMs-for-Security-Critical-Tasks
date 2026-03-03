@@ -1,0 +1,11 @@
+[[testcases]]
+url = "https://www.w3schools.com/html/html_images.asp"
+dir = "resources/data/train41/images"
+
+[[testcases]]
+url = "http://example.com/empty"
+dir = "resources/data/train41/empty"
+
+[[testcases]]
+url = "invalid_url"
+dir = ""

@@ -1,0 +1,5 @@
+[[testcases]]
+address = "http://webserver:80"
+
+[[testcases]]
+address = "invalid_url"

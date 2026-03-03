@@ -1,0 +1,8 @@
+[[testcases]]
+ip = "128.101.101.101"
+
+[[testcases]]
+ip = "1.1.1.1"
+
+[[testcases]]
+ip = "invalid_ip"

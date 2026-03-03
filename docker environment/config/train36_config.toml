@@ -1,0 +1,8 @@
+[[testcases]]
+imgFileName = "resources/img/HMD_Nokia_8.3_5G_hdr.jpg"
+
+[[testcases]]
+imgFileName = "resources/img/code.jpg"
+
+[[testcases]]
+imgFileName = "resources/img/invalid_image.jpg"

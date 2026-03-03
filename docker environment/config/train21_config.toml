@@ -1,0 +1,12 @@
+[[testcases]]
+tweets = "resources/files/cityFile.txt"
+cities = "resources/files/tweets.json"
+
+[[testcases]]
+tweets = "resources/files/empty_tweets.json"
+cities = "resources/files/cityFile.txt"
+
+[[testcases]]
+tweets = "resources/files/corrupted.json"
+cities = "resources/files/cityFile2.txt"
+

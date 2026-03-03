@@ -1,0 +1,14 @@
+[[testcases]]
+configFile = "resources/data/handler/handler_{name}.rc"
+lhost = "192.168.1.50"
+lport = 4444
+
+[[testcases]]
+configFile = "resources/data/handler/handler_empty_{name}.rc"
+lhost = ""
+lport = 0
+
+[[testcases]]
+configFile = "resources/data/handler/handler_invalid_{name}.rc"
+lhost = "invalid_ip"
+lport = -1

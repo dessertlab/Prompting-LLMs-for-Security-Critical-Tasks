@@ -1,0 +1,14 @@
+[[testcases]]
+host = "127.0.0.1"
+user = "testuser"
+password = "abc123"
+
+[[testcases]]
+host = "10.0.0.5"
+user = "root"
+password = ""
+
+[[testcases]]
+host = ""
+user = ""
+password = ""

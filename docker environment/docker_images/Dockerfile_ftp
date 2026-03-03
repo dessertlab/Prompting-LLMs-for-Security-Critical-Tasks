@@ -1,0 +1,14 @@
+FROM fauria/vsftpd
+
+# Aggiungi user2
+RUN useradd -m user2 && \
+    echo "user2:pass2" | chpasswd && \
+    mkdir -p /home/user2/ftp && \
+    chown -R user2:user2 /home/user2
+
+# Aggiungi user3
+RUN useradd -m user3 && \
+    echo "user3:pass3" | chpasswd && \
+    mkdir -p /home/user3/ftp && \
+    chown -R user3:user3 /home/user3
+

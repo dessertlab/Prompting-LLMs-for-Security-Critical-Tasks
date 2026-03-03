@@ -1,0 +1,32 @@
+[[testcases]]
+src = "192.168.0.1"
+dst = "8.8.8.8"
+sport = 12345
+dport = 53
+id = 43690  # 0xAAAA
+qr = 1
+rrname = "www.example.com"
+ttl = 3600
+rdata = "93.184.216.34"
+
+[[testcases]]
+src = "0.0.0.0"
+dst = "255.255.255.255"
+sport = 0
+dport = 53
+id = 0
+qr = 0
+rrname = ""
+ttl = 0
+rdata = "0.0.0.0"
+
+[[testcases]]
+src = "invalid_ip"
+dst = "8.8.8.8"
+sport = -1
+dport = 53
+id = -100
+qr = 1
+rrname = "invalid.example.com"
+ttl = -3600
+rdata = "93.184.216.34"

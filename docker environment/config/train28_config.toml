@@ -1,0 +1,14 @@
+[[testcases]]
+title = "Example Page"
+text = "This is some content."
+url = "http://example.com"
+
+[[testcases]]
+title = ""
+text = ""
+url = ""
+
+[[testcases]]
+title = "特殊ページ"
+text = "特殊文字テスト"
+url = "https://テスト.jp"

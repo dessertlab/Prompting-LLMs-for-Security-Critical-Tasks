@@ -1,0 +1,8 @@
+[[testcases]]
+hostname = "ftp-anon"
+
+[[testcases]]
+hostname = "localhost"
+
+[[testcases]]
+hostname = "invalid_host"

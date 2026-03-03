@@ -1,0 +1,8 @@
+[[testcases]]
+iphoneDB = "resources/database/iphoneDB.sqlite"
+
+[[testcases]]
+iphoneDB = ""
+
+[[testcases]]
+iphoneDB = 123

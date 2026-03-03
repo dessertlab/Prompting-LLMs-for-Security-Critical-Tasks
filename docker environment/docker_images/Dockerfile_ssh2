@@ -1,0 +1,19 @@
+FROM ubuntu:20.04
+
+RUN apt-get update && \
+    apt-get install -y openssh-server openssh-client && \
+    mkdir -p /var/run/sshd && \
+    ssh-keygen -A
+
+RUN useradd -m testuser && echo "testuser:testpass" | chpasswd && \
+    useradd -m alice && echo 'alice:alicepass' | chpasswd && \
+    useradd -m admin && echo 'admin:passw0rd' | chpasswd
+
+# Permette il login con password
+RUN sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    echo "PermitEmptyPasswords no" >> /etc/ssh/sshd_config
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]

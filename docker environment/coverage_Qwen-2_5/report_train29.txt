@@ -1,0 +1,10 @@
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+functions/train29.py              141     45    68%
+utils/__init__.py                   0      0   100%
+utils/execute_all_cases.py         41      6    85%
+utils/execute_script_case.py      437    351    20%
+utils/management_functions.py     121     65    46%
+utils/mappings.py                   2      0   100%
+---------------------------------------------------
+TOTAL                             742    467    37%

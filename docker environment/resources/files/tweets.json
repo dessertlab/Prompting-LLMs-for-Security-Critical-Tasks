@@ -1,0 +1,7 @@
+[
+    {"tweet": "I love the nightlife in Berlin!", "geo": {"lat": 52.5200, "lon": 13.4050}},
+    {"tweet": "Sunsets in Rome are magical.", "geo": null},
+    {"tweet": "Exploring Milan was a dream.", "geo": {"lat": 45.4642, "lon": 9.1900}},
+    {"tweet": "Paris is always a good idea.", "geo": null},
+    {"tweet": "Enjoying coffee in Naples", "geo": null}
+]

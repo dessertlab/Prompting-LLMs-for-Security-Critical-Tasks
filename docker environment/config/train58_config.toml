@@ -1,0 +1,17 @@
+[[testcases]]
+host = "ssh-container"
+user = "testuser"
+password = "testpass"
+release = 1
+
+[[testcases]]
+host = ""
+user = ""
+password = ""
+release = 1
+
+[[testcases]]
+host = "invalid_host"
+user = "user"
+password = "wrongpass"
+release = 1

@@ -1,0 +1,14 @@
+[[testcases]]
+src = "192.168.99.20"
+dst = "192.168.99.2"
+ack = 2000
+
+[[testcases]]
+src = "0.0.0.0"
+tgt = "255.255.255.255"
+ack = 0
+
+[[testcases]]
+src = "invalid_ip"
+tgt = "also_invalid"
+ack = -100

@@ -1,0 +1,10 @@
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+functions/dev1.py                 127     27    79%
+utils/__init__.py                   0      0   100%
+utils/execute_all_cases.py         41      6    85%
+utils/execute_script_case.py      447    406     9%
+utils/management_functions.py     121     65    46%
+utils/mappings.py                   2      0   100%
+---------------------------------------------------
+TOTAL                             738    504    32%

@@ -1,0 +1,10 @@
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+functions/test3.py                362     87    76%
+utils/__init__.py                   0      0   100%
+utils/execute_all_cases.py         41      6    85%
+utils/execute_script_case.py      438    370    16%
+utils/management_functions.py     121     56    54%
+utils/mappings.py                   2      0   100%
+---------------------------------------------------
+TOTAL                             964    519    46%

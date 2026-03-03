@@ -1,0 +1,11 @@
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+functions/anonBrowser.py           27      3    89%
+functions/train14.py              158     53    66%
+utils/__init__.py                   0      0   100%
+utils/execute_all_cases.py         41      6    85%
+utils/execute_script_case.py      446    380    15%
+utils/management_functions.py     121     65    46%
+utils/mappings.py                   2      0   100%
+---------------------------------------------------
+TOTAL                             795    507    36%

@@ -1,0 +1,8 @@
+[[testcases]]
+url = "https://www.iana.org/help/example-domains"
+
+[[testcases]]
+url = "https://www.wikipedia.org"
+
+[[testcases]]
+url = "not_a_url"

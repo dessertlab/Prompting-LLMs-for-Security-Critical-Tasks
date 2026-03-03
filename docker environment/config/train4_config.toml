@@ -1,0 +1,8 @@
+[[testcases]]
+subnet = "172.42.0.0/28"
+
+[[testcases]]
+subnet = "10.0.0.0/28"
+
+[[testcases]]
+subnet = "invalid_subnet"

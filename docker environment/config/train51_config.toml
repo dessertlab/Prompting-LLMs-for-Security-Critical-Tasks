@@ -1,0 +1,17 @@
+[[testcases]]
+host = "ssh-container"
+user = "testuser"
+password = "testpass"
+command = "echo Hello"
+
+[[testcases]]
+host = "localhost"
+user = "user"
+password = "pass"
+command = "uptime"
+
+[[testcases]]
+host = "invalid_host"
+user = ""
+password = ""
+command = "ls"

@@ -1,0 +1,7 @@
+[[testcases]]
+handle = "test_user"
+cityFile = "resources/files/cityFile.txt"
+
+[[testcases]]
+handle = "test_user"
+cityFile = ""

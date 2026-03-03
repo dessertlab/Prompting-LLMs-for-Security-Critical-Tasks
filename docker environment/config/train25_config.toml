@@ -1,0 +1,20 @@
+[[testcases]]
+first_name = "Alice"
+last_name = "Rossi"
+job = "Engineer"
+social_media = { twitter = "@alice_rossi", linkedin = "alice-rossi" }
+media_name = "twitter"
+
+[[testcases]]
+first_name = "Bob"
+last_name = "Brown"
+job = "Designer"
+social_media = {}
+media_name = "twitter"
+
+[[testcases]]
+first_name = "名"
+last_name = "字"
+job = "開発者"
+social_media = { github = "github.com/testuser" }
+media_name = "github"

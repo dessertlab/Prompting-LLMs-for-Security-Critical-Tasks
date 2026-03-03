@@ -1,0 +1,11 @@
+[[testcases]]
+handle = "example_user"
+query = "sunshine"
+
+[[testcases]]
+handle = ""
+query = ""
+
+[[testcases]]
+handle = "ユーザ"
+query = "文字"

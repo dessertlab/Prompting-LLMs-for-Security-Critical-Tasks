@@ -1,0 +1,206 @@
+version: "3.8"
+
+services:
+  bot:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_bot
+    image: bot_server
+    container_name: bot
+    ports:
+      - "10001:9999"
+    networks:
+      - bot_net
+
+  cookie-server:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_cookie
+    image: cookie-server
+    container_name: cookie-server
+    ports:
+      - "5000:5000"
+    networks:
+      - flask_net
+      
+  flask-server:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_flask
+    image: flask-server
+    container_name: flask-server
+    ports:
+      - "5000:5000"
+    networks:
+      - flask_net
+      
+  ftp-anon:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_anon
+    image: ftp-anon
+    container_name: ftp-anon
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    networks:
+      - ftp_net
+      
+  ftp-brute:
+    build: 
+      context: ./docker_images
+      dockerfile: Dockerfile_ftp
+    container_name: ftp-brute
+    networks:
+        - ftp_net
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    environment:
+      - FTP_USER=testuser
+      - FTP_PASS=testpass
+      - PASV_ENABLE=YES
+      - PASV_ADDRESS=172.17.0.1
+      - PASV_MIN_PORT=21000
+      - PASV_MAX_PORT=21010
+      - LOG_STDOUT=1
+    volumes:
+      - ./docker_images/ftpdata:/home/vsftpd
+  
+  ftp-test:
+    image: fauria/vsftpd
+    container_name: ftp-test
+    networks:
+        - ftp_net
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    environment:
+      FTP_USER: admin
+      FTP_PASS: admin
+      PASV_ADDRESS: 127.0.0.1
+      PASV_MIN_PORT: 21000
+      PASV_MAX_PORT: 21010
+    volumes:
+      - ./docker_images/ftpdata2:/home/vsftpd
+  
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"   
+      - "8025:8025"   
+    networks:
+      - mail_net
+
+  mock-twitter:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_twitter
+    image: mock-twitter
+    container_name: mock-twitter
+    ports:
+      - "8080:5000"
+    networks:
+      - twitter_net
+
+  smb1:
+    image: dperson/samba
+    container_name: smb1
+    ports:
+      - "4451:445"
+    command: -s "share;/share;yes;no;yes;all;none"
+    networks:
+      - smb_net
+
+  smb2:
+    image: dperson/samba
+    container_name: smb2
+    ports:
+      - "4452:445"
+    command: -s "share;/share;yes;no;yes;all;none"
+    networks:
+      - smb_net
+      
+  squid:
+    image: ubuntu/squid
+    container_name: squid-proxy
+    networks:
+      - proxy_net
+    ports:
+      - "3128:3128"
+    volumes:
+      - ./docker_images/squid.conf:/etc/squid/squid.conf:ro
+
+  
+  ssh-container:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_ssh
+    image: ssh-container
+    container_name: ssh-container
+    ports:
+      - "22:22"
+    networks:
+      - ssh_net
+      
+  ssh-test:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_ssh2
+    image: ssh-test
+    container_name: ssh-test
+    ports:
+      - "22:22"
+    networks:
+      - ssh_net
+      
+  tcp-server:
+    build:
+      context: ./docker_images
+      dockerfile: Dockerfile_tcp
+    image: tcp-server
+    container_name: tcp-server
+    ports:
+      - "9999:9999"
+    networks:
+      - tcp_net
+  
+  webserver:
+    image: nginx
+    container_name: webserver
+    ports:
+      - "8081:80"
+    networks:
+      webserver_net:
+        ipv4_address: 172.32.0.2
+    volumes:
+      - ./docker_images/webserver/index.html:/usr/share/nginx/html/index.html:ro
+  
+
+
+networks:
+    proxy_net:
+        external: true
+    bot_net:
+        external: true
+    ftp_net:
+        external: true
+    webserver_net:
+        external: true
+    flask_net:
+        external: true
+    mail_net:
+        external: true
+    twitter_net:
+        external: true
+    smb_net:
+        external: true 
+    tcp_net:
+        external: true             
+    udp_net:
+        external: true
+    ssh_net:
+        external: true
+
+

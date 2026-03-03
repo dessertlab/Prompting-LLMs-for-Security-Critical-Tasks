@@ -1,0 +1,14 @@
+[[testcases]]
+url = "http://httpbin.org/html"
+proxy1 = {"http" = "http://squid-proxy:3128"}
+proxy2 = "http://squid-proxy:3128"
+
+[[testcases]]
+url = ""
+proxy1 = {}
+proxy2 = {}
+
+[[testcases]]
+url = 123
+proxy1 = "not_a_dict"
+proxy2 = "not_a_dict"

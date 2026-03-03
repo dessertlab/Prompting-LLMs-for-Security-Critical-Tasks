@@ -1,0 +1,14 @@
+[[testcases]]
+user = "test@example.com"
+pwd = "123abc"
+to = "dest@example.com"
+
+[[testcases]]
+user = ""
+pwd = ""
+to = ""
+
+[[testcases]]
+user = "malformed@"
+pwd = "short"
+to = "also_bad"

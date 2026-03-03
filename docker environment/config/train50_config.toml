@@ -1,0 +1,11 @@
+[[testcases]]
+tgtHost = "tcp-server"
+tgtPort = 9999
+
+[[testcases]]
+tgtHost = "localhost"
+tgtPort = 80
+
+[[testcases]]
+tgtHost = "invalid_host"
+tgtPort = -1

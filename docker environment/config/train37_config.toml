@@ -1,0 +1,11 @@
+[[testcases]]
+ip = "ftp-test"
+port = 21
+user = "admin"
+password = "admin"
+
+[[testcases]]
+ip = "invalid_host"
+port = -1
+user = ""
+password = ""

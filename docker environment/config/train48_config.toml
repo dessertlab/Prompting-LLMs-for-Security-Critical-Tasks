@@ -1,0 +1,8 @@
+[[testcases]]
+databases = "resources/database/skypeDB.sqlite"
+
+[[testcases]]
+databases = ""
+
+[[testcases]]
+databases = 123

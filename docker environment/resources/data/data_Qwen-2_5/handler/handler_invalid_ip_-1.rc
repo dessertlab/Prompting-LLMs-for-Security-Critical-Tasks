@@ -1,0 +1,6 @@
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LPORT -1
+set LHOST invalid_ip
+exploit -j -z
+setg DisablePayloadHandler 1

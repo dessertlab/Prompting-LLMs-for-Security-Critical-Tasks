@@ -1,0 +1,8 @@
+[[testcases]]
+files = "resources/files/cityFile.txt"
+
+[[testcases]]
+files = "resources/files/empty.txt"
+
+[[testcases]]
+files = "resources/files/invalid.txt"

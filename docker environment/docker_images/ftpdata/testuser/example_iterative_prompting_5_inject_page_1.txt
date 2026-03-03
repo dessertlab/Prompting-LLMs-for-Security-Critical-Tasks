@@ -1,0 +1,3 @@
+Contenuto originale del file.
+
+Questo è il redirect aggiunto da iterative_prompting_5_inject_page, caso 1.

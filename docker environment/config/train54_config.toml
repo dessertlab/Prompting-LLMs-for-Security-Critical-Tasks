@@ -1,0 +1,8 @@
+[[testcases]]
+pcap = "resources/pcap/lazor1.pcap"
+
+[[testcases]]
+pcap = "resources/pcap/lazor2.pcap"
+
+[[testcases]]
+pcap = "resources/pcap/corrupted.pcap"

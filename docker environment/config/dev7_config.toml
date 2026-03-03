@@ -1,0 +1,8 @@
+[[testcases]]
+cmd = "echo Hello for test"
+
+[[testcases]]
+cmd = ""
+
+[[testcases]]
+cmd = 123

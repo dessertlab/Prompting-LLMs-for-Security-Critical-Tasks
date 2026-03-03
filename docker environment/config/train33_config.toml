@@ -1,0 +1,14 @@
+[[testcases]]
+host = "localhost"
+user = "testuser"
+password = "abc123"
+
+[[testcases]]
+host = ""
+user = ""
+password = ""
+
+[[testcases]]
+host = "テストホスト"
+user = "ユーザ"
+password = "パスワード"

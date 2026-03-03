@@ -1,0 +1,17 @@
+[[testcases]]
+src = "192.168.1.100"
+dst = "8.8.8.8"
+ttl = 64
+protocol = "ICMP"
+
+[[testcases]]
+src = "10.0.0.5"
+dst = "1.1.1.1"
+ttl = 128
+protocol = "ICMP"
+
+[[testcases]]
+src = "invalid_ip"
+dst = "bad_dst"
+ttl = -1
+protocol = "ICMP"

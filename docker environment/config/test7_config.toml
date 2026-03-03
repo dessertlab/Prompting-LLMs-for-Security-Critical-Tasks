@@ -1,0 +1,7 @@
+[[testcases]]
+ip_name = "webserver"
+ip = "172.32.0.2"
+
+[[testcases]]
+ip_name =  "invalid_target"
+ip = "invalid_target"

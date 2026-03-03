@@ -1,0 +1,8 @@
+[[testcases]]
+database = "resources/database/placesDB.sqlite"
+
+[[testcases]]
+database = ""
+
+[[testcases]]
+database = 123

@@ -1,0 +1,11 @@
+[[testcases]]
+hostname = "ftp-brute"
+passwdFile = "resources/files/ftp_password.txt"
+
+[[testcases]]
+hostname = "localhost"
+passwdFile = "resources/files/empty.txt"
+
+[[testcases]]
+hostname = "invalid_host"
+passwdFile = "resources/files/invalid.txt"

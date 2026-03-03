@@ -1,0 +1,12 @@
+[[testcases]]
+url = "http://flask-server:5000"
+userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/91.0.4472.124 Safari/537.36"
+
+[[testcases]]
+url = "http://flask-server:5000"
+userAgent = ""
+
+[[testcases]]
+url = "invalid_url"
+userAgent = 12345
+

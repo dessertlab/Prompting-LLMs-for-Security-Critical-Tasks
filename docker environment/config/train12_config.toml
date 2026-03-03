@@ -1,0 +1,8 @@
+[[testcases]]
+database = "resources/database/cookiesDB.sqlite"
+
+[[testcases]]
+database = ""
+
+[[testcases]]
+databases = 123
