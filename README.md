@@ -1,6 +1,6 @@
-# Prompting Large Language Models for Offensive Security: A Systematic Evaluation of Python Code Generation
+# Evaluating Prompting Strategies for LLM-Based Code Generation in Security-Critical Tasks
 
-This repository contains the code for reproducing the experiments described in the paper "*Prompting Large Language Models for Offensive Security: A Systematic Evaluation of Python Code Generation*" submitted to **Computers & Security** Journal. 
+This repository contains the code for reproducing the experiments described in the paper "*Evaluating Prompting Strategies for LLM-Based Code Generation in Security-Critical Tasks*" submitted to **Information and Software Technology** Journal. 
 
 ## Overview
 
